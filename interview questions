@@ -1,0 +1,93 @@
+𝗗𝗮𝘁𝗮 𝗘𝗻𝗴𝗶𝗻𝗲𝗲𝗿 𝗜𝗻𝘁𝗲𝗿𝘃𝗶𝗲𝘄 𝗤𝘂𝗲𝘀𝘁𝗶𝗼𝗻𝘀 𝟮𝟬𝟮𝟱:
+**********************************************************
+
+
+
+🔹 𝐒𝐐𝐋 & 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
+
+✅ Write a query to find the second highest salary from an employee table.
+        A subquery can be used to exclude the maximum salary and find the second-highest salary. Below is a simple query to find the employee whose salary is the highest. 
+        
+        Query:
+        
+        SELECT name, salary  
+        FROM employee  
+        WHERE salary = (  
+            SELECT MAX(salary)  
+            FROM employee  
+            WHERE salary < (SELECT MAX(salary) FROM employee)  
+        );
+
+
+✅ Explain the difference between INNER JOIN, LEFT JOIN, and FULL OUTER JOIN.
+
+        INNER JOIN: Returns only matched rows LEFT JOIN: Return all rows from the left table, and the matched rows from the right table RIGHT JOIN: Return all rows from
+the right table, and the matched rows from the left table FULL JOIN: Return all rows from both the tables.
+
+✅ How do you optimize a SQL query for better performance?
+    Avoid using SELECT *
+    Use EXISTS instead of IN
+    Use GROUP BY to group data
+    Use stored procedures
+    Minimize the use of wildcard characters
+    Increase Query Performance with Indexes
+
+✅ What are CTEs and Window Functions, and when should you use them?
+    
+✅ How do you handle duplicate records in SQL?
+
+  Use the DISTINCT keyword with the SELECT statement to eliminate all the duplicate records and retrieve only the unique records.
+  Use the GROUP BY clause to group all rows by the target column(s) and the COUNT function in the HAVING clause to check if any of the groups have more than 1 entry.
+  If comparing two tables 
+  Use the WHERE NOT IN clause to select records that are not in another table.
+  Use the WHERE NOT EXISTS clause to select records that do not exist in another table.
+
+
+
+🔹 𝐁𝐢𝐠 𝐃𝐚𝐭𝐚 & 𝐇𝐚𝐝𝐨𝐨𝐩 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
+✅ What is the difference between HDFS and a traditional RDBMS?
+  1. Data Organization:
+    RDBMS: Highly structured, organized in tables with rows and columns. Data must adhere to a predefined schema.
+    HDFS: Can handle structured, semi-structured, and unstructured data. Data is stored as files in a hierarchical directory structure, without strict schema constraints.
+  2. Data Processing:
+    RDBMS: Optimized for transactional operations (OLTP) with frequent updates and reads.
+    HDFS: Designed for batch processing and large-scale analytics (OLAP) on massive datasets.
+  3. Scalability:
+    RDBMS: Typically scales vertically by adding more resources to a single server (limited scalability).
+    HDFS: Horizontally scalable by adding more nodes to the cluster, enabling massive data storage and processing.
+  4. Data Access:
+    RDBMS: Efficient random access to individual records using SQL queries.
+    HDFS: Optimized for sequential access to large files, not ideal for random reads or updates.
+  5. Consistency:
+    RDBMS: Ensures strong consistency through ACID transactions (Atomicity, Consistency, Isolation, Durability).
+    HDFS: Offers eventual consistency, meaning changes may take time to propagate across the cluster.
+  6. Cost:
+    RDBMS: Often proprietary with licensing costs.
+    HDFS: Open-source, part of the Apache Hadoop ecosystem, with no licensing fees.
+
+✅ Explain the role of NameNode and DataNode in HDFS.
+    NameNode is the master node in HDFS that manages the file system metadata.
+    DataNode is a slave node in HDFS that stores the actual data as instructed by the NameNode.
+
+✅ How does MapReduce work, and when would you use it?
+    MapReduce is the programming model that enables the analysis of massive volumes of Big Data through parallel processing.
+✅ What are the advantages of Apache Hive over traditional SQL databases?
+    Hive writes and queries data in HDFS. SQL requires multiple reads and writes.
+    Hive is better for analyzing complex data sets. SQL is better for analyzing less complicated data sets very quickly.
+    Hive queries can have high latency because Hive runs batch processing via Hadoop.
+    
+✅ What is the difference between Apache Spark and Hadoop MapReduce?
+
+🔹 𝐄𝐓𝐋 & 𝐃𝐚𝐭𝐚 𝐏𝐢𝐩𝐞𝐥𝐢𝐧𝐞 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
+✅ What are the key components of an ETL pipeline?
+✅ How would you design a data ingestion pipeline for real-time processing?
+✅ Explain incremental vs. full data loads in ETL.
+✅ What challenges have you faced when working with large-scale ETL pipelines?
+✅ How do you handle data quality issues in ETL?
+
+🔹 𝐂𝐥𝐨𝐮𝐝 𝐫𝐞𝐥𝐚𝐭𝐞𝐝 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
+✅ What is the difference between Azure Data Factory and AWS Glue?
+✅ How does serverless computing (AWS Lambda/Azure Functions) work in data pipelines?
+✅ Explain IAM roles and permissions in cloud data platforms.
+✅ What is Terraform, and how do you use it for cloud infrastructure?
+✅ How do you handle monitoring and logging in cloud-based data pipelines?
