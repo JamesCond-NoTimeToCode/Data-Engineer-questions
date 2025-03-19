@@ -77,13 +77,51 @@ the right table, and the matched rows from the left table FULL JOIN: Return all 
     Hive queries can have high latency because Hive runs batch processing via Hadoop.
     
 ✅ What is the difference between Apache Spark and Hadoop MapReduce?
+        Processing speed: Apache Spark is much faster than Hadoop MapReduce.
+        Data processing paradigm: Hadoop MapReduce is designed for batch processing, while Apache Spark is more suited for real-time data processing and iterative analytics.
+        Ease of use: Apache Spark has a more user-friendly programming interface and supports multiple languages, while Hadoop MapReduce requires developers to write code in Java.
+        Fault tolerance: Apache Spark's Resilient Distributed Datasets (RDDs) offer better fault tolerance than Hadoop MapReduce's Hadoop Distributed File System (HDFS).
+        Integration: Apache Spark has a more extensive ecosystem and integrates well with other big data tools, while Hadoop MapReduce is primarily designed to work with Hadoop Distributed File System (HDFS).
 
 🔹 𝐄𝐓𝐋 & 𝐃𝐚𝐭𝐚 𝐏𝐢𝐩𝐞𝐥𝐢𝐧𝐞 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
 ✅ What are the key components of an ETL pipeline?
+        Data source, data extraction, data transformation, data loading , Orchestration and Workflow Management.
 ✅ How would you design a data ingestion pipeline for real-time processing?
+        By keeping the followinng things in mind
+        Low Latency
+        High Availability
+        Scalability
+        Fault Tolerance
+        Realtime Data Processing
+        Data Freshness
+        these features are essential for real-time systems to function properly.
+
+        
 ✅ Explain incremental vs. full data loads in ETL.
+        Incremental loading is the process of updating a database or data warehouse with only the new or modified data from the source system. Unlike full loads, which overwrite the entire dataset, incremental loading focuses on transferring only the changes. This approach is faster, uses fewer resources, and preserves historical data.
+        Full load is the process of transferring the entire dataset from a source system to a database or data warehouse. Unlike incremental loading, which updates only new or changed data, full load replaces all existing data with the latest dataset.
+        
 ✅ What challenges have you faced when working with large-scale ETL pipelines?
+        5 ETL Challenges
+        Network latency: Large ETL workloads can transfer many gigabytes or terabytes of data, which means that your network connection needs to be fast. High amounts of network latency may be an unexpected bottleneck, holding you back from performing ETL at maximum speed.
+        Unoptimized code: If you’ve hand-coded parts of the ETL pipeline, your code base may be suffering from inefficiencies and errors behind the scenes. These inefficiencies can be introduced at any stage of the ETL process: reading from source files, transforming data, loading it into the final data warehouse, etc.
+        Not enough resources: If your ETL system is lacking in computing resources such as memory or storage, your workloads can slow down dramatically. Your file systems and caches may also suffer from fragmentation over time, especially on Windows operating systems.
+        Data quality issues: Out-of-date, inaccurate, and duplicate records are just a few data quality issues when performing ETL. Your ETL workflow needs to verify that you’re pulling the newest information possible, and that you aren’t extracting the same information from multiple sources.
+        Long-term maintenance: The ETL needs of almost every organization will evolve over time. This includes changes in data formats and data connections, as well as increased data volume and velocity (i.e. the amount of new data and the speed at which it arrives).
+       
+        How to Optimize Your ETL Pipeline
+        Below is a brief overview of the 5 ways to fine-tune your ETL workflows:
+        SQL: Well-designed SQL queries can be orders of magnitude faster than poorly designed ones. Potential SQL optimizations include removing the use of SELECT * statements and using INNER JOIN instead of WHERE.
+        Space: Large ETL workloads require large amounts of space—not only for storing the data itself, but also for intermediate steps such as indexing, partitioning, and logging. Acquiring enough storage and resolving disk fragmentation issues on a regular basis are essential.
+        Sessions: ETL is highly resource-intensive, which means it can conflict with other sessions and processes. Make sure that other sessions aren’t consuming too many resources or locking up data that you need for your ETL workflow.
+        Statistics: Using database table statistics helps SQL engines make subtle tweaks and quick estimations that add up over time. The more accurate your statistics are, the better your database will perform during the ETL process.
+        Scheduled processes: ETL jobs should ideally be run during less active times (such as the weekends or overnight). Make sure that you schedule ETL processes for off-peak hours, while making sure that the final reports will be on key decision-makers’ desks in time.
+
 ✅ How do you handle data quality issues in ETL?
+        Define Data Quality Rules: Clearly define what constitutes quality data in the context of your business objectives.
+        Continuous Monitoring: Regularly monitor data quality, adjusting checks as new data sources are integrated or business needs evolve.
+        Data Profiling: Periodically profile your data sources to identify potential quality issues before they enter your ETL process.
+        
 
 🔹 𝐂𝐥𝐨𝐮𝐝 𝐫𝐞𝐥𝐚𝐭𝐞𝐝 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
 ✅ What is the difference between Azure Data Factory and AWS Glue?
