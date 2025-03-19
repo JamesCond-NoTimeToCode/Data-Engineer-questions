@@ -130,5 +130,16 @@ the right table, and the matched rows from the left table FULL JOIN: Return all 
         data connectors
 ✅ How does serverless computing (AWS Lambda/Azure Functions) work in data pipelines?
 ✅ Explain IAM roles and permissions in cloud data platforms.
+        There are three types of roles in google cloud IAM:
+        Basic roles, which provide broad access to Google Cloud resources.
+        Predefined roles, which provide granular access for a specific service and are managed by Google Cloud.
+        Custom roles, which provide granular access according to a user-specified list of permissions.
 ✅ What is Terraform, and how do you use it for cloud infrastructure?
+        its a service for infrastructure automation that is engineered to manage infrastructure with Terraform in a collaborative and efficient manner. Terraform Cloud provides a cloud-based platform where users can securely run, manage, and collaborate on Terraform workflows. 
 ✅ How do you handle monitoring and logging in cloud-based data pipelines?
+        Proactive monitoring,
+        Set Up Alerts and Notifications
+        Analyze Performance Bottlenecks
+        Continuous Improvement
+        Error Handling and Logging Matter in Data Pipelines
+        you can also do that by Implementing AWS CloudWatch, Azure Monitor, or Google Cloud Operations Suite. 
