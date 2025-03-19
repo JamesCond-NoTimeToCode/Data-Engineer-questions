@@ -125,6 +125,9 @@ the right table, and the matched rows from the left table FULL JOIN: Return all 
 
 🔹 𝐂𝐥𝐨𝐮𝐝 𝐫𝐞𝐥𝐚𝐭𝐞𝐝 𝐐𝐮𝐞𝐬𝐭𝐢𝐨𝐧𝐬:
 ✅ What is the difference between Azure Data Factory and AWS Glue?
+        pricing 
+        ssis support
+        data connectors
 ✅ How does serverless computing (AWS Lambda/Azure Functions) work in data pipelines?
 ✅ Explain IAM roles and permissions in cloud data platforms.
 ✅ What is Terraform, and how do you use it for cloud infrastructure?
