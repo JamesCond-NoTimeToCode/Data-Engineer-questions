@@ -6,7 +6,17 @@ In rule-based optimization the rule based optimizer use set of rule to determine
 
 2. “What happens when Spark writes a DataFrame as a Parquet file?”
 3. “List 5 partitioning strategies and their trade-offs.”
+          Horizantal partioning ,
+          veritcal partitioning,
+          Key based Partitioning,
+          round robin Partitioning,
+          range based partitioning,
+          hash based partitioning.
+
+
 4. “Explain watermarking in structured streaming and late data handling.”
+
+
 5. “Describe what Z-Ordering does in Delta Lake and when NOT to use it.”
 6. “How does Snowflake caching work internally?”
 7. “What’s the exact difference between a broadcast join and a shuffle hash join?”
