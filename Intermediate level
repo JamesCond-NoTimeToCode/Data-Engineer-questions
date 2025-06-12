@@ -31,7 +31,97 @@ Important to note that you need statistics collected on columns that you Z-order
 
 
 6. “How does Snowflake caching work internally?”
+
+          Snowflake Cache Layers
+          
+          Snowflake's architecture consists of three main layers, each with its own caching mechanism:
+          
+          Result Cache: This cache stores the results of queries executed in the past 24 hours. If a query is re-executed and the underlying data hasn't changed, the result is retrieved from this cache, providing instant results.
+          Local Disk Cache: This cache is used to store data retrieved from the remote storage during query execution. It resides on SSD storage and is temporary, existing only as long as the virtual warehouse is active.
+          
+          Remote Disk: This is the long-term storage layer, typically implemented using Amazon S3 or Microsoft Blob storage. It ensures data durability and resilience
+
 7. “What’s the exact difference between a broadcast join and a shuffle hash join?”
+          The difference between a broadcast join and a shuffle hash join in Spark is as follows: 
+          Broadcast Join:
+                    Replicates the smaller dataset to all executors.
+                    Enables faster join performance.
+                    Suitable when one dataset is small enough to be broadcasted.
+          Shuffle Hash Join:
+                    Shuffles the data based on join keys.
+                    Performs the join.
+                    Suitable when datasets are large and need to be shuffled.
 8. “If your pipeline fails after 7 hours due to 1 corrupt record — what’s the redesign?”
+
 9. “Tell us how you'd design a real-time pipeline for 500M events/day.”
+
+          Consider these strategies for effective scaling:
+          
+          Horizontal Scaling: Add more nodes to your processing clusters to handle increased data flow. Make use of cloud services for flexible scalability.
+          Load Balancing: Distribute incoming data evenly across your processing nodes to prevent any single node from becoming a bottleneck.
+          Microservices Architecture: Implement a microservices approach to enable independent scaling of different components of your data pipeline.
+
 10. “Explain SCD Type 2 implementation using only Spark SQL.”
+          Types of Slowly Changing Dimensions
+          Multiple types of SCDs define how to store historical changes in dimension data:
+                    In PySpark, implementing SCD Type 2 involves merging incoming data with the existing dimension data and creating new records for updates. Below is a simplified implementation:
+                    
+                    Pyspark code:
+                    
+                    from pyspark.sql import SparkSession
+                    from pyspark.sql.functions import col, current_date, lit, when
+                     
+                    # Initialize Spark session
+                    spark = SparkSession.builder.appName("SCDType2").getOrCreate()
+                     
+                    # Sample DataFrames
+                    existing_df = spark.createDataFrame([
+                        (1, 'Aiswarya', 'Newtown', '2020-01-01', '2023-01-01', 'N'),
+                    ], ['Customer_ID', 'Customer_Name', 'Address', 'Start_Date', 'End_Date', 'Current_Flag'])
+                     
+                    new_df = spark.createDataFrame([
+                        (1, 'Aiswarya', 'Saltlake', '2023-01-02'),
+                    ], ['Customer_ID', 'Customer_Name', 'Address', 'Start_Date'])
+                     
+                    # Step 1: Identify changes
+                    change_df = existing_df.alias('existing').join(
+                        new_df.alias('new'),
+                        on=['Customer_ID'],
+                        how='inner'
+                    ). filter(
+                        (col('existing.Address') != col('new.Address'))
+                    )
+                     
+                    # Step 2: Close out old records (set end date and flag them as 'N')
+                    updated_existing_df = existing_df.alias('existing').join(
+                        change_df.select('existing.Customer_ID'),
+                        on=['Customer_ID'],
+                        how='inner'
+                    ). withColumn(
+                        'End_Date', current_date()
+                    ).withColumn(
+                        'Current_Flag', lit('N')
+                    )
+                     
+                    # Step 3: Insert new records for changed data
+                    new_records_df = change_df.withColumn(
+                        'End_Date', lit (None)
+                    ).withColumn(
+                        'Current_Flag', lit('Y')
+                    )
+                     
+                    # Combine the new and old records
+                    final_df = updated_existing_df.union(new_records_df)
+                     
+                    final_df.show()
+                    In this code:
+                    
+                    We compare the existing data (existing_df) with the incoming new data (new_df).
+                    For any changed records, we “close” the old records by updating the End_Date and setting the Current_Flag to ‘N’.
+                    New records are added with the updated information and a Current_Flag of ‘Y’.
+                    Benefits:
+                    
+                    Complete historical tracking.
+                    Allows analysis of data as it existed at any point in time.
+                    It is useful when business processes need to be tracked over time, such as customer activity, product changes, etc.
+                              
