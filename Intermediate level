@@ -1,0 +1,37 @@
+1. “Explain Catalyst Optimizer’s rule-based vs cost-based phases.”
+
+In rule-based optimization the rule based optimizer use set of rule to determine how to execute the query. While the cost based optimization finds the most suitable way to carry out SQL statement.
+
+
+
+2. “What happens when Spark writes a DataFrame as a Parquet file?”
+3. “List 5 partitioning strategies and their trade-offs.”
+          Horizantal partioning ,
+          veritcal partitioning,
+          Key based Partitioning,
+          round robin Partitioning,
+          range based partitioning,
+          hash based partitioning.
+
+
+4. “Explain watermarking in structured streaming and late data handling.”
+          To handle late or out-of-order data in Structured Streaming, you can use Watermark (ts_col, late_threshold) on the streaming DataFrame. When working with multiple Structured Streaming inputs, you can set multiple watermarks to control tolerance thresholds for late-arriving data.
+
+
+5. “Describe what Z-Ordering does in Delta Lake and when NOT to use it.”
+          Z-ordering is a technique in Delta Lake that improves query performance by clustering data based on the values of specific columns, creating a spatially-optimized layout. It's particularly useful for faster data retrieval in scenarios with selective queries, especially those using filters.
+
+Z-Ordering is a technique to colocate related information in the same set of files. This co-locality is automatically used by Delta Lake on Databricks data-skipping algorithms to dramatically reduce the amount of data that needs to be read. Syntax for Z-ordering can be found here.
+
+If you expect a column to be commonly used in query predicates and if that column has high cardinality (that is, a large number of distinct values) which might make it ineffective for PARTITIONing the table by, then use ZORDER BY instead (ex:- a table containing companies, dates where you might want to partition by company and z-order by date assuming that table collects data for several years)
+
+You can specify multiple columns for ZORDER BY as a comma-separated list. However, the effectiveness of the locality drops with each additional column.
+
+Important to note that you need statistics collected on columns that you Z-order by else data skipping won't take effect. Thus its important to reorder the table such that the Z-order by column(s) are in one of the first 32 columns or change the dataSkippingNumIndexedCols property
+
+
+6. “How does Snowflake caching work internally?”
+7. “What’s the exact difference between a broadcast join and a shuffle hash join?”
+8. “If your pipeline fails after 7 hours due to 1 corrupt record — what’s the redesign?”
+9. “Tell us how you'd design a real-time pipeline for 500M events/day.”
+10. “Explain SCD Type 2 implementation using only Spark SQL.”
