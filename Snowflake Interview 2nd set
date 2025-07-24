@@ -1,0 +1,26 @@
+Interview Questions for experienced - senior Data Engineer role
+1. How to check UDF's
+2. Can we create Snowpipe on Internal Stages
+3. How to Call UDF 
+4. How to Call Procedure 
+5. How to store Semi Structured Data
+6. Snowflake Table Types
+7. How to find Snowflake Version
+8. Snowflake Editions
+9. Task Syntax
+10. I have a file in External Location S3, As soon as I placed a file needs to load into Snowflake Table. Approach
+11. Load only Valid records during Copy Statement
+12.  View to check Storage of a Table
+13. Does Secure Materialized View Occupy Storage
+14. Can we Perform DMLs on Materialized View 
+15. Does DMLs are Auto Committed in Snowflake
+16. Can Materials Views can be created on Multiple Tables
+17. How To Implement CDC 
+18. What is the default Retention Time of Snowflake Tables
+19. Which Constraints Snowflake Enforces 
+20. Does Cloned Object will have Storage 
+21. How to check does Stream has Data or not
+22. How to check Time Travel
+23. What are the Ticketing Tools in the Project
+24. What are the Databases Or Instances available in a Project
+25. Does GET Command work on Web UI
