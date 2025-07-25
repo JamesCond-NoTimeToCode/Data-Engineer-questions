@@ -9,7 +9,13 @@ Explain Different Star Schema? Snowflake Schema ? Galaxy Schema/COnstellation sc
           more than one fact table - connects to many dimensions table and some of those dimension tables are common between the fact tables --Galaxy/Constellation schema. 
 
 
-1. How to check UDF's
+How to check UDF's
+          UDF's are user defined functions and can be accessed by the following commands 
+          SHOW USER FUNCTIONS;
+          SHOW USER FUNCTIONS IN Shcema DBname.Schemaname;
+          DESCRIBE FUNCTION my_function_name(<arg_data_type>);
+
+
 2. Can we create Snowpipe on Internal Stages
 3. How to Call UDF 
 4. How to Call Procedure 
