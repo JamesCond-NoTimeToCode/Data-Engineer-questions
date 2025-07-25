@@ -1,4 +1,14 @@
 Interview Questions for experienced - senior Data Engineer role
+
+
+Explain Different Star Schema? Snowflake Schema ? Galaxy Schema/COnstellation schema??
+          1 fact table -- connected to many dimensions table = STAR SCHEMA
+          
+          1 fact table -- Connected to many dimensions table and those dimension table connected to other dimensions tables -- SNOWFLAKE SCHEMA
+          
+          more than one fact table - connects to many dimensions table and some of those dimension tables are common between the fact tables --Galaxy/Constellation schema. 
+
+
 1. How to check UDF's
 2. Can we create Snowpipe on Internal Stages
 3. How to Call UDF 
