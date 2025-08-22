@@ -1,0 +1,108 @@
+How do you choose between star & snowflake schema? (Follow-up: How do you manage slowly changing dimensions?)
+
+      Star Schema Structure: Fact table at center, surrounded by denormalized dimension tables.
+      Use Star Schema for reporting, dashboards, and ad-hoc analytics where performance and simplicity matter.
+      Snowflake Schema Structure: Fact table at center, with normalized dimension tables (dimension hierarchies split into multiple related tables).
+      Use Snowflake Schema when dimensions are large, hierarchical, and subject to frequent updates (e.g., Product → Category → Department, or Geography → State → Country).
+  MANAGING SCD'S
+      Managing Slowly Changing Dimensions (SCDs)
+      
+      SCDs handle how changes in dimension attributes are tracked over time.
+      
+      Overwrite: Old value IS replaced with new one and No history maintained. this is Used for corrections (e.g., fixing a typo in a customer’s name).
+      
+      History Tracking: Create a new row with a new surrogate key for each change to Maintain validity dates or current-flag columns. this Preserves full history (e.g., customer moves to a new city).
+      
+      Limited History: Add new columns to store previous values. Maintains only a limited number of changes. Use when only last known change is needed (e.g., previous vs current sales region).
+      
+      👉 Best Practices for SCDs:
+      
+      Choose based on business need: If history is critical → choose History Tracking.
+      If only current values matter → Overwrite.
+      If only recent changes matter → limited history
+
+
+
+
+Spark Structured Streaming - How do you ensure exactly-once semantics?
+
+          Key Principles of Exactly-Once in Spark Structured Streaming
+          1. Input Side: Source Guarantees
+          
+          Kafka (most common):
+          
+          Spark tracks offsets in checkpoint location (HDFS/S3/ADLS/GCS).
+          
+          Each micro-batch picks up exactly the committed offsets; no duplication if checkpoint is durable.
+          
+          With Kafka 0.11+ and idempotent/transactional writes, you can get end-to-end exactly-once.
+          
+          File sources:
+          
+          Spark lists new files since last checkpoint, so ingestion is naturally idempotent (assuming immutable files).
+          
+          Other sources:
+          
+          You must ensure they provide replayable and ordered data (e.g., CDC logs).
+          
+          2. Processing: Fault-Tolerant State & Idempotence
+          
+          Spark uses checkpointing + write-ahead logs (WAL) to maintain state (aggregations, joins, watermarks).
+          
+          On failure, Spark reprocesses from the last committed offsets/state snapshot, avoiding duplicates.
+          
+          State Store (RocksDB-like under the hood) ensures consistent recovery of aggregations and joins.
+          
+          3. Output Side: Sink Guarantees
+          
+          This is the trickiest part — how to make sure you don’t write duplicates to the sink if Spark retries a batch.
+          
+          Idempotent Writes (recommended):
+          
+          If writing to Delta Lake, Hudi, Iceberg, or JDBC with MERGE/UPSERT, duplicates are eliminated by design.
+          
+          Example: MERGE into a Delta table on primary key ensures only one copy per event.
+          
+          Transactional Writes:
+          
+          For Kafka sink: with Kafka 0.11+ and Spark 2.4+, you can use writeStream.format("kafka") with transactional.id set. Spark then commits offsets and Kafka messages atomically.
+          
+          Idempotent APIs:
+          
+          If writing to external APIs or NoSQL (e.g., Cassandra, Elasticsearch), ensure idempotent upserts (keyed by event_id).
+          
+          File Sink:
+          
+          Append-only file sink is exactly-once by construction (each batch generates deterministic files, tracked in checkpoint).
+          
+          4. Checkpointing: The Backbone
+          
+          Always set a reliable checkpoint location (HDFS/S3/ADLS/GCS).
+          
+          Checkpoint stores:
+          
+          Source offsets
+          
+          State store snapshots
+          
+          Sink metadata (e.g., file names written)
+          
+          On restart, Spark replays from the last successful checkpoint → exactly-once is preserved.
+          
+          ✅ Recipe for Exactly-Once
+          
+          Pick a replayable input source (Kafka with offset tracking, file-based ingestion).
+          
+          Enable checkpointing to durable storage (.option("checkpointLocation", "s3://...")).
+          
+          Use idempotent or transactional sink:
+          
+          Delta Lake / Hudi / Iceberg → MERGE by key.
+          
+          Kafka sink → enable transactions.
+          
+          JDBC / API → implement upserts or dedup keys.
+          
+          Design for replay: ensure all transformations are deterministic (no rand(), no nondeterministic UDFs).
+          
+          Test failure recovery by killing/restarting jobs and verifying no duplicates/loss.
